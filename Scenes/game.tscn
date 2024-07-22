@@ -14,7 +14,7 @@ scale = Vector2(14.44, 3.64)
 texture = ExtResource("1_o4b0m")
 
 [node name="Player" parent="." instance=ExtResource("1_1ccck")]
-position = Vector2(45, 320)
+position = Vector2(45, 388)
 speed = 200
 jumpImpulse = -300
 dust = ExtResource("2_s8tr3")
