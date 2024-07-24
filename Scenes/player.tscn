@@ -1,7 +1,8 @@
-[gd_scene load_steps=20 format=3 uid="uid://c1ugxsb0fsg3e"]
+[gd_scene load_steps=22 format=3 uid="uid://c1ugxsb0fsg3e"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_8tocd"]
 [ext_resource type="Texture2D" uid="uid://7wsgp8rgfmi5" path="res://Assets/PlayerSheet.png" id="2_xqlum"]
+[ext_resource type="Script" path="res://Scenes/Sword.gd" id="3_qehtp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f4y20"]
 
@@ -133,6 +134,9 @@ animations = [{
 "speed": 6.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lhrjk"]
+size = Vector2(6, 20)
+
 [node name="Player" type="CharacterBody2D"]
 scale = Vector2(2, 2)
 script = ExtResource("1_8tocd")
@@ -148,4 +152,13 @@ sprite_frames = SubResource("SpriteFrames_buuv4")
 animation = &"Attack"
 offset = Vector2(0, -24)
 
+[node name="Sword" type="Area2D" parent="."]
+position = Vector2(10, -8)
+script = ExtResource("3_qehtp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword"]
+position = Vector2(5, 0)
+shape = SubResource("RectangleShape2D_lhrjk")
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="body_entered" from="Sword" to="Sword" method="_on_body_entered"]
