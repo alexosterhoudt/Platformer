@@ -155,7 +155,7 @@ func _exit_state() -> void:
 			if is_on_floor():
 				var new_dust : CPUParticles2D = dust.instantiate()
 				get_parent().add_child(new_dust)
-				new_dust.global_position = global_position + Vector2(0,0)
+				new_dust.global_position = global_position + Vector2(0,-4)
 				new_dust.emitting = true
 				await new_dust.finished
 				new_dust.queue_free()

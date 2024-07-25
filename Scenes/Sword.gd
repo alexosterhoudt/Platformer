@@ -5,7 +5,7 @@ extends Area2D
 @export var facing_collision_shape : FacingCollisionShape2D
 
 func _ready():
-	monitoring = true
+	monitoring = false
 	player.connect("facing_direction_changed", _on_player_facing_direction_changed)
 
 func _on_body_entered(body):
