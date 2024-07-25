@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://cljaj5rialc83"]
+[gd_scene load_steps=13 format=3 uid="uid://cljaj5rialc83"]
 
 [ext_resource type="Script" path="res://TestPlayer.gd" id="1_g2lcf"]
 [ext_resource type="Texture2D" uid="uid://7wsgp8rgfmi5" path="res://Assets/PlayerSheet.png" id="2_jn37e"]
 [ext_resource type="Script" path="res://Scenes/Sword.gd" id="3_2etcu"]
+[ext_resource type="Script" path="res://Scripts/FacingCollisionShape2D.gd" id="4_l5brt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_83qsd"]
 
@@ -109,7 +110,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_as6t0"]
-size = Vector2(6, 20)
+size = Vector2(16.4077, 43)
 
 [node name="TestPlayer" type="CharacterBody2D"]
 scale = Vector2(2, 2)
@@ -131,13 +132,18 @@ libraries = {
 "": SubResource("AnimationLibrary_jsjqp")
 }
 
-[node name="Sword" type="Area2D" parent="."]
-position = Vector2(10, -8)
+[node name="Sword" type="Area2D" parent="." node_paths=PackedStringArray("player", "facing_collision_shape")]
 script = ExtResource("3_2etcu")
+player = NodePath("..")
+facing_collision_shape = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sword"]
-position = Vector2(5, 0)
+position = Vector2(17, -22)
+scale = Vector2(0.994583, 0.838809)
 shape = SubResource("RectangleShape2D_as6t0")
+script = ExtResource("4_l5brt")
+facing_left_position = Vector2(-17, -22)
+facing_right_position = Vector2(17, -22)
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="body_entered" from="Sword" to="Sword" method="_on_body_entered"]

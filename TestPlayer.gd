@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody2D
 
 @export var speed = 100
@@ -9,6 +10,8 @@ extends CharacterBody2D
 var gravity = 980
 var isAttacking = false
 var screen_size;
+
+signal facing_direction_changed(facing_right : bool)
 
 enum STATE
 {
@@ -74,6 +77,9 @@ func _update_state(delta: float):
 				sprite_2d.flip_h = true
 			elif velocity.x > 0:
 				sprite_2d.flip_h = false
+			
+			emit_signal("facing_direction_changed", !sprite_2d.flip_h)
+			
 			if !is_on_floor(): # if not on floor, fall down
 				_set_state(STATE.FALL)
 			elif Input.is_action_just_pressed("jump"):
@@ -93,6 +99,9 @@ func _update_state(delta: float):
 				sprite_2d.flip_h = true
 			elif velocity.x > 0:
 				sprite_2d.flip_h = false
+			
+			emit_signal("facing_direction_changed", !sprite_2d.flip_h)
+			
 			if !is_on_floor(): # if in the air, apply gravity
 				velocity.y += gravity * delta
 				if velocity.y > 0: # after max height, change from JUMP to FALL
@@ -109,6 +118,9 @@ func _update_state(delta: float):
 				sprite_2d.flip_h = true
 			elif velocity.x > 0:
 				sprite_2d.flip_h = false
+			
+			emit_signal("facing_direction_changed", !sprite_2d.flip_h)
+			
 			if is_on_floor(): # If the ground is reached, change back to idle
 				_set_state(STATE.IDLE)
 			else: # if still in the air, apply gravity
