@@ -27,3 +27,9 @@ jumpImpulse = -300
 dust = ExtResource("2_s8tr3")
 
 [node name="HealthManager" parent="." instance=ExtResource("6_mrurl")]
+
+[node name="Blob2" parent="." instance=ExtResource("5_onafi")]
+position = Vector2(359, 376)
+
+[node name="Blob3" parent="." instance=ExtResource("5_onafi")]
+position = Vector2(179, 403)
