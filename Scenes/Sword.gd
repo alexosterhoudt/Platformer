@@ -3,6 +3,7 @@ extends Area2D
 @export var damage : int = 10
 @export var player : Player
 @export var facing_collision_shape : FacingCollisionShape2D
+@onready var shake_camera_2d = $TestPlayer/ShakeCamera2D
 
 func _ready():
 	monitoring = false
@@ -12,6 +13,7 @@ func _on_body_entered(body):
 	for child in body.get_children():
 		if child is Damageable:
 			child.hit(damage)
+			Global.camera.shake(0.2, 2)
 
 func _on_player_facing_direction_changed(facing_right : bool):
 	if(facing_right):

@@ -1,29 +1,28 @@
 extends Camera2D
 
-@export var decay : float = 0.8
-@export var max_offset : Vector2 = Vector2(100, 75)
-@export var max_roll : float = 0.1
-@export var target : NodePath
+var shake_amount : float = 0
+var default_offset : Vector2 = offset
+var pos_x : int
+var pos_y : int
 
-var trauma = 0.0
-var trauma_power = 2
+@onready var timer : Timer = $Timer
+@onready var tween : Tween = create_tween()
 
 func _ready():
+	set_process(true)
+	Global.camera = self
 	randomize()
 
-func add_trauma(amount):
-	trauma = min(trauma + amount, 1.0)
-	
-
 func _process(delta):
-	if target:
-		global_position = get_node(target).global_position
-	if trauma:
-		trauma = max(trauma - decay * delta, 0)
-		shake()
+	offset = Vector2(randf_range(-1, 1) * shake_amount, randf_range(-1, 1) * shake_amount)
 
-func shake():
-	var amount = pow(trauma, trauma_power)
-	rotation = max_roll * amount * randf_range(-1, 1)
-	offset.x = max_offset.x * amount * randf_range(-1, 1)
-	offset.y = max_offset.y * amount * randf_range(-1, 1)
+func shake(time : float, amount : float) -> void:
+	timer.wait_time = time
+	shake_amount = amount
+	set_process(true)
+	timer.start()
+
+
+func _on_timer_timeout():
+	set_process(false)
+	tween.interpolate_value(self, "offset", 1, 1, Tween.TRANS_LINEAR, Tween.EASE_IN)

@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://fiuqb7j4jdvn"]
+[gd_scene load_steps=8 format=3 uid="uid://fiuqb7j4jdvn"]
 
 [ext_resource type="Texture2D" uid="uid://c4faucbayufg0" path="res://Assets/sky.png" id="1_o4b0m"]
 [ext_resource type="PackedScene" uid="uid://dqiwojlhs4qqy" path="res://Scenes/tile_map.tscn" id="2_5t6ff"]
 [ext_resource type="PackedScene" uid="uid://ds16squmjx3h0" path="res://Scenes/dust.tscn" id="2_s8tr3"]
 [ext_resource type="PackedScene" uid="uid://b0vdoqncjur8n" path="res://Scenes/blob.tscn" id="5_onafi"]
 [ext_resource type="PackedScene" uid="uid://0jbs6sjkdwqe" path="res://UI/health_manager.tscn" id="6_mrurl"]
+[ext_resource type="PackedScene" uid="uid://cqpqnivmoxd4p" path="res://UI/shake_camera_2d.tscn" id="6_x8a8c"]
 [ext_resource type="PackedScene" uid="uid://cljaj5rialc83" path="res://Scenes/test_player.tscn" id="6_ynojx"]
 
 [node name="Game" type="Node2D"]
@@ -26,6 +27,10 @@ speed = 200
 jumpImpulse = -300
 dust = ExtResource("2_s8tr3")
 
+[node name="ShakeCamera2D" parent="TestPlayer" instance=ExtResource("6_x8a8c")]
+
+[node name="Timer" type="Timer" parent="TestPlayer/ShakeCamera2D"]
+
 [node name="HealthManager" parent="." instance=ExtResource("6_mrurl")]
 
 [node name="Blob2" parent="." instance=ExtResource("5_onafi")]
@@ -33,3 +38,5 @@ position = Vector2(359, 376)
 
 [node name="Blob3" parent="." instance=ExtResource("5_onafi")]
 position = Vector2(179, 403)
+
+[connection signal="timeout" from="TestPlayer/ShakeCamera2D/Timer" to="TestPlayer/ShakeCamera2D" method="_on_timer_timeout"]
